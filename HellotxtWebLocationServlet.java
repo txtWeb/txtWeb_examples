@@ -18,8 +18,10 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-//A simple application which uses the mobile hash from where the request to txtWeb was made, and calls location API to extract the location information for that mobile
+//A simple application which uses the mobile hash from where the request to txtWeb was made, 
+//and calls location API to extract the location information for that mobile
 //Send @hellotxtweblocation to see this app live
+
 public class HellotxtWebLocationServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 2441651572495913280L;
@@ -39,7 +41,8 @@ public class HellotxtWebLocationServlet extends HttpServlet {
 	throws IOException {
 
 		try{
-			String txtWebMobileHash = httpRequest.getParameter(HTTP_PARAM_TXTWEB_MOBILE); 		// mobile number in hash format of the user whose location has to be extracted
+                        // Mobile number in hash format of the user whose location has to be extracted
+			String txtWebMobileHash = httpRequest.getParameter(HTTP_PARAM_TXTWEB_MOBILE); 		
 			
 			if (txtWebMobileHash == null || txtWebMobileHash.isEmpty()){
 				sendResponse(httpResponse, getWelcomeMessage());
@@ -72,7 +75,13 @@ public class HellotxtWebLocationServlet extends HttpServlet {
 			 */
 			NodeList childNodes = doc.getChildNodes();
 			String code = "-1";
-			String isDefaultLocation = ""; //if this value is set to true, it means the location has been set by the user, else it is a value that has been guesses by the platform from the end user's mobile number
+			String isDefaultLocation = ""; 
+                        /*
+                        * If the above value(isDefaultLocation) is set to true, 
+                        * it means the location has been set by the user, 
+                        * else it is a value that has been guesses by the platform 
+                        * from the end user's mobile number
+                        */
 			String userLocationText = "";
 			String city = ""; 
 			String province = "";
@@ -84,7 +93,8 @@ public class HellotxtWebLocationServlet extends HttpServlet {
 				if( childNode.getNodeType() == Node.ELEMENT_NODE ){ 
 					Element element = (Element) childNode;
 					code = getTagValue("code", element);
-					if (this.SUCCESS_CODE.equals(code)){	// if success, then extract all location params
+                                        // if success, then extract all location params
+					if (this.SUCCESS_CODE.equals(code)){	
 						isDefaultLocation = getTagValue("default", element);
 						userLocationText = getTagValue("userlocationtext", element);
 						// Note that City, province, country and postalcode can be null
